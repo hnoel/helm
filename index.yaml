@@ -1,0 +1,50 @@
+apiVersion: v1
+entries:
+  demarche-numerique:
+  - apiVersion: v2
+    appVersion: 2026-04-13-01
+    created: "2026-05-05T20:49:58.773605664Z"
+    description: A Helm chart for deploying french government website 'demarche.numerique.gouv.fr'
+      on an OpenShift like Kubernetes cluster
+    digest: dc7549d303f92bf19b66790fc82c919514b3ea87ae13850c28ea8f35db95dc47
+    home: https://github.com/hnoel/demarche.numerique.gouv.fr
+    icon: https://cdn.jsdelivr.net/npm/@gouvfr/dsfr@1.14.4/dist/favicon/favicon.svg
+    keywords:
+    - demarche-numerique
+    - openshift
+    - helm
+    maintainers:
+    - email: hnoel@users.noreply.github.com
+      name: henri NOËL
+    name: demarche-numerique
+    sources:
+    - https://github.com/demarche-numerique/demarche.numerique.gouv.fr
+    type: application
+    urls:
+    - https://github.com/hnoel/helm/releases/download/demarche-numerique-0.1.1/demarche-numerique-0.1.1.tgz
+    version: 0.1.1
+  kanban:
+  - apiVersion: v2
+    appVersion: 2026-05-05-01
+    created: "2026-05-05T20:49:58.959654728Z"
+    description: A Helm chart for deploying a kanban following frecnh government design
+      state on an OpenShift like Kubernetes cluster
+    digest: 5712c468a8fd57ad75fe0f89e48762ecd6be53efbdc473b5e9635843e9017fab
+    home: https://github.com/hnoel/kanban
+    icon: https://cdn.jsdelivr.net/npm/@gouvfr/dsfr@1.14.4/dist/favicon/favicon.svg
+    keywords:
+    - kanban
+    - DSFR
+    - openshift
+    - helm
+    maintainers:
+    - email: hnoel@users.noreply.github.com
+      name: henri NOËL
+    name: kanban
+    sources:
+    - https://github.com/hnoel/kanban
+    type: application
+    urls:
+    - https://github.com/hnoel/helm/releases/download/kanban-0.0.1/kanban-0.0.1.tgz
+    version: 0.0.1
+generated: "2026-05-05T20:49:58.959660238Z"
