@@ -42,10 +42,10 @@ spec:
               type: RuntimeDefault
           ports:
             - name: user-port
-              containerPort: {{ .Values.env.user_port }}
+              containerPort: {{ .Values.service.userPort }}
               protocol: TCP
             - name: queue-port
-              containerPort: {{ .Values.env.queue_port }}
+              containerPort: {{ .Values.service.queuePort }}
               protocol: TCP
           terminationMessagePolicy: FallbackToLogsOnError
           readinessProbe:
