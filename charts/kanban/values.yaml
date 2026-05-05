@@ -9,7 +9,7 @@ image:
 service:
   type: ClusterIP
   port: 80
-  targetPort: 8080
+  userPort: 8080
   queuePort: 8112
 
 route:
