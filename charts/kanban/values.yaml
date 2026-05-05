@@ -1,0 +1,31 @@
+---
+replicaCount: 2
+
+image:
+  repository: ghcr.io/hnoel/kanban
+  tag: "main"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+route:
+  enabled: true
+  host: example.com # à surcharger en prod
+  tls: true
+
+resources:
+  limits:
+    cpu: "2"
+    memory: "2Gi"
+  requests:
+    cpu: "1"
+    memory: "1Gi"
+
+env:
+  - name: queue_port
+    value: 8112
+  - name: user_port
+    value: 8080
+...
