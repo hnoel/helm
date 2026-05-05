@@ -51,7 +51,7 @@ spec:
           readinessProbe:
             httpGet:
               path: /
-              port: {{ .Values.env.queue_port }}
+              port: {{ .Values.service.queuePort }}
               scheme: HTTP
               httpHeaders:
                 - name: K-Network-Probe
