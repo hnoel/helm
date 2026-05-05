@@ -11,7 +11,7 @@ spec:
     - port: {{ .Values.service.httpsPort }}
       targetPort: {{ .Values.service.queuePort }}
       protocol: TCP
-      name: http
+      name: https
     - port: {{ .Values.service.httpPort }}
       targetPort: {{ .Values.service.userPort }}
       protocol: TCP
