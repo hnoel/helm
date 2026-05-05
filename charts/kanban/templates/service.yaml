@@ -9,7 +9,7 @@ spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.httpsPort }}
-      targetPort: {{ .Values.service.targetPort }}
+      targetPort: {{ .Values.service.queuePort }}
       protocol: TCP
       name: http
     - port: {{ .Values.service.httpPort }}
