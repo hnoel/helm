@@ -1,5 +1,6 @@
 ---
 replicaCount: 2
+namespace: default
 
 image:
   repository: ghcr.io/hnoel/kanban
