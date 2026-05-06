@@ -41,10 +41,10 @@ spec:
             seccompProfile:
               type: RuntimeDefault
           ports:
-            - name: user-port
+            - name: http
               containerPort: {{ .Values.service.userPort }}
               protocol: TCP
-            - name: queue-port
+            - name: https
               containerPort: {{ .Values.service.queuePort }}
               protocol: TCP
           terminationMessagePolicy: FallbackToLogsOnError

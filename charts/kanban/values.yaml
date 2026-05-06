@@ -9,9 +9,9 @@ image:
 service:
   type: ClusterIP
   httpPort: 80
-  userPort: 8012
+  userPort: 8080
   httpsPort: 443
-  queuePort: 8112
+  queuePort: 8443
 
 route:
   enabled: true
@@ -28,7 +28,7 @@ resources:
 
 env:
   - name: queue_port
-    value: 8112
+    value: 8443
   - name: user_port
     value: 8080
 ...
