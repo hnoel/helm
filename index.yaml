@@ -47,4 +47,39 @@ entries:
     urls:
     - https://github.com/hnoel/helm/releases/download/kanban-0.0.1/kanban-0.0.1.tgz
     version: 0.0.1
-generated: "2026-05-05T20:49:58.959660238Z"
+  sites-faciles:
+  - apiVersion: v2
+    appVersion: 3.1.1
+    created: "2026-05-06T19:37:00.298407807Z"
+    dependencies:
+    - name: sites-faciles
+      repository: file://charts/sites-faciles
+      version: 0.0.1
+    - name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 18.5.15
+    description: A Helm chart for deploying french government website framwork 'sites-faciles'
+      on an OpenShift like Kubernetes cluster
+    digest: 5dde292db2457a4cb2a05c3b17f61f0dace799d28df29d5db5fdd1c8d0011e67
+    home: https://github.com/hnoel/sites-faciles
+    icon: https://cdn.jsdelivr.net/npm/@gouvfr/dsfr@1.14.4/dist/favicon/favicon.svg
+    keywords:
+    - sites-faciles
+    - DSFR
+    - python
+    - Django
+    - Wagtail
+    - postgresql
+    - openshift
+    - helm
+    maintainers:
+    - email: hnoel@users.noreply.github.com
+      name: henri NOËL
+    name: sites-faciles
+    sources:
+    - https://github.com/numerique-gouv/sites-faciles
+    type: application
+    urls:
+    - https://github.com/hnoel/helm/releases/download/sites-faciles-0.0.1/sites-faciles-0.0.1.tgz
+    version: 0.0.1
+generated: "2026-05-06T19:37:00.298418136Z"
