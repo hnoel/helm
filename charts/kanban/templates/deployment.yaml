@@ -3,10 +3,10 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: {{ .Release.Name }}-{{ .Chart.Name }}
+  namespace: {{ .Values.namespace }}
   labels:
     app: {{ .Chart.Name }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-  namespace {{ .Values.namespace }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
