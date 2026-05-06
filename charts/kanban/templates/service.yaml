@@ -8,14 +8,19 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.httpsPort }}
-      targetPort: {{ .Values.service.queuePort }}
+    - name: https
       protocol: TCP
-      name: https
-    - port: {{ .Values.service.httpPort }}
-      targetPort: {{ .Values.service.userPort }}
+      port: {{ .Values.service.extHttpsPort }}
+      targetPort: {{ .Values.service.intHttpsPort }}
+    - name: http
+      port: {{ .Values.service.extHttpPort }}
       protocol: TCP
-      name: http
+      targetPort: {{ .Values.service.intHttpPort }}
+  sessionAffinity: None
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  internalTrafficPolicy: Cluster
   selector:
     app: {{ .Chart.Name }}
 ...

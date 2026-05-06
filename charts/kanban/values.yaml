@@ -8,10 +8,10 @@ image:
 
 service:
   type: ClusterIP
-  httpPort: 80
-  userPort: 8080
-  httpsPort: 443
-  queuePort: 8443
+  extHttpPort: 80
+  intHttpPort: 8080
+  extHttpsPort: 443
+  intHttpsPort: 8443
 
 route:
   enabled: true

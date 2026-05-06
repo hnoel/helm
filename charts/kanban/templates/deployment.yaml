@@ -17,21 +17,15 @@ spec:
         app: {{ .Chart.Name }}
     spec:
       containers:
-        - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env:
-            {{- range .Values.env }}
-            - name: {{ .name }}
-              value: {{ .value | quote }}
-            {{- end }}
-          resources:
+        - resources:
             limits:
               cpu: {{ .Values.resources.limits.cpu }}
               memory: {{ .Values.resources.limits.memory }}
             requests:
               cpu: {{ .Values.resources.requests.cpu }}
               memory: {{ .Values.resources.requests.memory }}
+          terminationMessagePath: /dev/termination-log
+          name: {{ .Chart.Name }}
           securityContext:
             capabilities:
               drop:
@@ -44,21 +38,9 @@ spec:
             - name: http
               containerPort: {{ .Values.service.userPort }}
               protocol: TCP
-            - name: https
-              containerPort: {{ .Values.service.queuePort }}
-              protocol: TCP
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           terminationMessagePolicy: FallbackToLogsOnError
-          readinessProbe:
-            httpGet:
-              path: /
-              port: {{ .Values.service.queuePort }}
-              scheme: HTTP
-            timeoutSeconds: 1
-            periodSeconds: 10
-            successThreshold: 1
-            failureThreshold: 3
-          terminationMessagePath: /dev/termination-log
-          name: queue-proxy
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
   strategy:
     type: RollingUpdate
     rollingUpdate:
