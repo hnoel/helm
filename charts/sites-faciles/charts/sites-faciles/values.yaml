@@ -87,4 +87,14 @@ env:
     value: "5432"
   - name: SITE_NAME
     value: "Sites Conformes"
+  - name: DATABASE_URL
+    value: postgres://user:password@postgres:5432/dbname
+  - name: CONTAINER_PORT
+    value: 8000
+  - name: ALLOWED_HOSTS
+    value: '0.0.0.0,127.0.0.1'
+  - name: SECRET_KEY
+    value: change_me
+  - name: HOST_URL
+    value: '0.0.0.0'
 ...
