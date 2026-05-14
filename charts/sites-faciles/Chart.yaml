@@ -17,13 +17,11 @@ keywords:
 home: https://github.com/hnoel/sites-faciles
 sources:
   - https://github.com/numerique-gouv/sites-faciles
-dependencies:
-  - name: sites-faciles
-    version: "0.0.1"
-    repository: "file://charts/sites-faciles"
-  - name: postgresql
-    version: 18.5.15
-    repository: https://charts.bitnami.com/bitnami
+-dependencies:
+ - name: postgresql
+   version: 18.5.15
+   repository: https://charts.bitnami.com/bitnami
+   alias: postgres
 maintainers:
   - name: henri NOËL
     email: hnoel@users.noreply.github.com
