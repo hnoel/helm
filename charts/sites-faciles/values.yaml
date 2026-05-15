@@ -101,6 +101,9 @@ env:
   - name: HOST_URL
     value: '0.0.0.0'
 
+secret:
+  name: sites_conformes_secrets
+
 # Dependencies override
 postgresql:
   replicaCount: 1

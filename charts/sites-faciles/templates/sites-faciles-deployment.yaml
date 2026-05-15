@@ -40,17 +40,17 @@ spec:
             - name: POSTGRES_DB
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret
+                  name: {{ .Values.secret.name }}
                   key: POSTGRES_DB
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret
+                  name: {{ .Values.secret.name }}
                   key: POSTGRES_USER
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret
+                  name: {{ .Values.secret.name }}
                   key: POSTGRES_PASSWORD
             {{- range .Values.env }}
             - name: {{ .name }}
