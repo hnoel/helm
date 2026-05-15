@@ -17,7 +17,7 @@ keywords:
 home: https://github.com/hnoel/sites-faciles
 sources:
   - https://github.com/numerique-gouv/sites-faciles
--dependencies:
+dependencies:
  - name: postgresql
    version: 18.5.15
    repository: https://charts.bitnami.com/bitnami

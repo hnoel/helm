@@ -7,10 +7,11 @@ name: sites-faciles
 
 image:
   repository: ghcr.io/hnoel/sites-faciles
-  tag: "slim"
+  tag: "main"
   pullPolicy: IfNotPresent
 
-imagePullSecrets: []
+imagePullSecrets:
+  - name: my-registry
 nameOverride: ""
 fullnameOverride: ""
 
