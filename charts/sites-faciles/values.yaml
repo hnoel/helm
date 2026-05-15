@@ -101,16 +101,31 @@ env:
   - name: HOST_URL
     value: '0.0.0.0'
 
-postgres:
+# Dependencies override
+postgresql:
   replicaCount: 1
   image:
-    repository: docker.io/postgres
+    repository: docker.io/
+    repository: bitnamisecure/postgresql
     tag: "18"
     pullPolicy: IfNotPresent
+  auth:
+    enablePostgresUser: true
+  architecture: standalone
+  resources:
+    limits:
+      cpu: "1"
+      memory: 1Gi
+    requests:
+      cpu: 250m
+      memory: 256Mi
   service:
+    enabled: true
     type: ClusterIP
-    port: 5432
+    ports: 
+      postgresql: 5432
   persistence:
-    size: 1Gi
+    enabled: true
     storageClass: "standard"
+    size: 1Gi
 ...
