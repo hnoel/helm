@@ -6,8 +6,8 @@ namespace: hnoel-dev
 name: sites-faciles
 
 image:
-  repository: ghcr.io/numerique-gouv/sites-faciles
-  tag: "main"
+  repository: ghcr.io/hnoel/sites-faciles:slim
+  tag: "slim"
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
