@@ -6,7 +6,7 @@ namespace: hnoel-dev
 name: sites-faciles
 
 image:
-  repository: ghcr.io/hnoel/sites-faciles:slim
+  repository: ghcr.io/hnoel/sites-faciles
   tag: "slim"
   pullPolicy: IfNotPresent
 
