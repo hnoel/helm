@@ -1,9 +1,9 @@
 ---
 # SPDX-License-Identifier: AGPL-3.0-or-later
 apiVersion: v2
-name: sites-faciles
+name: sites-conformes
 version: 0.0.1
-description: A Helm chart for deploying french government website framwork 'sites-faciles' on an OpenShift like Kubernetes cluster
+description: A Helm chart for deploying french government website framwork 'sites-conformes' on an OpenShift like Kubernetes cluster
 type: application
 keywords:
   - sites-faciles
