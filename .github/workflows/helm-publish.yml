@@ -21,6 +21,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      # # see https://stackoverflow.com/a/77819284
+      # - name: Minify yaml file
+      #   uses: mikefarah/yq@master
+      #   with:
+      #     cmd: yq '.. style="flow"' input.yaml 
+
       - name: Helm installation
         uses: azure/setup-helm@v3
 
