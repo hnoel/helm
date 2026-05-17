@@ -86,13 +86,11 @@ affinity: {}
 
 env:
   - name: POSTGRES_HOST
-    value: postgres
+    value: primary
   - name: POSTGRES_PORT
     value: "5432"
   - name: SITE_NAME
     value: "Sites Conformes"
-  - name: DATABASE_URL
-    value: postgres://user:password@postgres:5432/dbname
   - name: CONTAINER_PORT
     value: 8000
   - name: ALLOWED_HOSTS
