@@ -57,8 +57,8 @@ spec:
                   name: {{ .Values.secret.name }}
                   key: POSTGRES_PASSWORD
                     - name: DATABASE_URL
-            -name: test
-             value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(DATABASE_URL):$(POSTGRES_PORT)/$(POSTGRES_DB)
+            - name: test
+              value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(DATABASE_URL):$(POSTGRES_PORT)/$(POSTGRES_DB)
             {{- range .Values.env }}
             - name: {{ .name }}
               value: {{ .value | quote }}
