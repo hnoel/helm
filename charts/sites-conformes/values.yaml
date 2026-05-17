@@ -3,7 +3,7 @@
 # ---
 replicaCount: 2
 namespace: hnoel-dev
-name: sites-faciles
+name: sites-conformes
 
 image:
   repository: ghcr.io/hnoel/sites-faciles
