@@ -24,7 +24,7 @@ dependencies:
 maintainers:
   - name: henri NOËL
     email: hnoel@users.noreply.github.com
-icon: https://github.com/GouvernementFR/dsfr/blob/main/src/dsfr/core/asset/favicon/favicon.svg
+icon: https://raw.githubusercontent.com/GouvernementFR/dsfr/refs/heads/main/src/dsfr/core/asset/favicon/favicon.svg
 appVersion: "3.1.1"
 deprecated: false
 ...
