@@ -47,6 +47,36 @@ entries:
     urls:
     - https://github.com/hnoel/helm/releases/download/kanban-0.0.1/kanban-0.0.1.tgz
     version: 0.0.1
+  sceau:
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2026-07-05T20:06:08.187149425Z"
+    dependencies:
+    - name: mariadb
+      repository: https://charts.bitnami.com/bitnami
+      version: 26.1.7
+    description: A Helm chart for deploying french government website 'sceau' on an
+      OpenShift like Kubernetes cluster
+    digest: 37a64787c79293b31128744ce8000bd52a1d735b731565e98fff73a1ac3f1dc2
+    home: https://github.com/hnoel/sceau
+    icon: https://raw.githubusercontent.com/GouvernementFR/dsfr/refs/heads/main/src/dsfr/core/asset/favicon/favicon.svg
+    keywords:
+    - sceau
+    - DSFR
+    - php
+    - mariadb
+    - openshift
+    - helm
+    maintainers:
+    - email: hnoel@users.noreply.github.com
+      name: henri NOËL
+    name: sceau
+    sources:
+    - https://github.com/hnoel/sceau
+    type: application
+    urls:
+    - https://github.com/hnoel/helm/releases/download/sceau-0.0.1/sceau-0.0.1.tgz
+    version: 0.0.1
   sites-conformes:
   - apiVersion: v2
     appVersion: 3.1.1
@@ -114,4 +144,4 @@ entries:
     urls:
     - https://github.com/hnoel/helm/releases/download/sites-faciles-0.0.1/sites-faciles-0.0.1.tgz
     version: 0.0.1
-generated: "2026-05-17T21:10:10.600970691Z"
+generated: "2026-07-05T20:06:08.350768503Z"
