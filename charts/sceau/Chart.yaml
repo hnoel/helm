@@ -1,0 +1,28 @@
+---
+# SPDX-License-Identifier: AGPL-3.0-or-later
+apiVersion: v2
+name: sceau
+version: 0.0.1
+description: A Helm chart for deploying french government website 'sceau' on an OpenShift like Kubernetes cluster
+type: application
+keywords:
+  - sceau
+  - DSFR
+  - php
+  - mariadb
+  - openshift
+  - helm
+home: https://github.com/hnoel/sceau
+sources:
+  - https://github.com/hnoel/sceau
+dependencies:
+ - name: mariadb
+   version: 26.1.7
+   repository: https://charts.bitnami.com/bitnami
+maintainers:
+  - name: henri NOËL
+    email: hnoel@users.noreply.github.com
+icon: https://raw.githubusercontent.com/GouvernementFR/dsfr/refs/heads/main/src/dsfr/core/asset/favicon/favicon.svg
+appVersion: "0.0.1"
+deprecated: false
+...

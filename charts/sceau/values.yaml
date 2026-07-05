@@ -1,0 +1,139 @@
+---
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# ---
+replicaCount: 2
+namespace: hnoel-dev
+name: sceau
+
+image:
+  repository: ghcr.io/hnoel/sceau
+  tag: "main"
+  pullPolicy: IfNotPresent
+
+imagePullSecrets:
+  - name: my-registry
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  extHttpPort: 80
+  intHttpPort: 8000
+
+route:
+  enabled: true
+  host: example.com # à surcharger en prod
+  tls: true
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources:
+  limits:
+    cpu: "2"
+    memory: "2Gi"
+  requests:
+    cpu: "1"
+    memory: "1Gi"
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+env:
+  - name: POSTGRES_HOST
+    value: 'primary'
+  - name: POSTGRES_PORT
+    value: '5432'
+  - name: SITE_NAME
+    value: 'Sites Conformes'
+  - name: CONTAINER_PORT
+    value: 8000
+  - name: ALLOWED_HOSTS
+    value: '0.0.0.0,127.0.0.1'
+  - name: SECRET_KEY
+    value: 'change_me'
+  - name: HOST_URL
+    value: '0.0.0.0'
+  - name: DATABASE_URL
+    value: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}"
+
+
+secret:
+  name: sceau.secrets
+
+# Dependencies override
+postgresql:
+  #global:
+  #  security:
+  #    allowInsecureImages: true
+  replicaCount: 1
+  image:
+    registry: docker.io
+    repository: bitnami/mariadb
+    tag: "latest"
+    pullPolicy: IfNotPresent
+  auth:
+    enablePostgresUser: true
+  architecture: standalone
+  resources:
+    limits:
+      cpu: "1"
+      memory: 1Gi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+  service:
+    enabled: true
+    type: ClusterIP
+    ports: 
+      postgresql: 5432
+  persistence:
+    enabled: true
+    storageClass: "standard"
+    size: 1Gi
+...
