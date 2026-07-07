@@ -85,13 +85,13 @@ tolerations: []
 affinity: {}
 
 env:
-  - name: MARIADB_DATABASE:
+  - name: MARIADB_DATABASE
     value: 'change_me'
-  - name: MARIADB_USER:
+  - name: MARIADB_USER
     value: 'change_me'
-  - name: MARIADB_PASSWORD:
+  - name: MARIADB_PASSWORD
     value: 'change_me'
-  - name: MARIADB_ROOT_PASSWORD:
+  - name: MARIADB_ROOT_PASSWORD
     value: 'change_me'
 
 secret:
