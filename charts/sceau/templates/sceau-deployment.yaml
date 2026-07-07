@@ -22,6 +22,45 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       containers:
+        - name: front
+          image: registry.access.redhat.com/hi/httpd:latest
+          ports:
+            - containerPort: {{ .Values.service.extHttpPort }}
+              name: http
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+            runAsUser: 1001
+            runAsGroup: 1001
+          volumeMounts:
+            - name: php-socket
+              mountPath: /var/run/php
+            - name: app
+              mountPath: /var/www/html
+          command: ["/bin/sh","-lc"]
+          args:
+            - |
+              set -euo pipefail
+              mkdir -p /etc/httpd/conf.d
+              cat > /etc/httpd/conf.d/zzz-php-fpm.conf <<'EOF'
+              LoadModule proxy_module modules/mod_proxy.so
+              LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so
+
+              <Directory "/var/www/html">
+                Options FollowSymLinks
+                AllowOverride All
+                Require all granted
+              </Directory>
+
+              DirectoryIndex index.php index.html
+
+              <FilesMatch "\.php$">
+                SetHandler "proxy:fcgi://localhost/var/run/php/php-fpm.sock|fcgi://localhost/"
+              </FilesMatch>
+              EOF
+              exec /usr/sbin/httpd -DFOREGROUND
         - resources:
             limits:
               cpu: {{ .Values.resources.limits.cpu }}
@@ -41,21 +80,29 @@ spec:
           terminationMessagePath: /dev/termination-log
           name: {{ .Chart.Name }}
           env:
-            - name: POSTGRES_DB
+            - name: SCEAU_TYPE_BD
+              value: "mysql"
+            - name: SCEAU_VERSION
+              value: "debug"
+            - name: SCEAU_DATE
+              value: "01/01/1970"
+            - name: SCEAU_HOST
+              value: "{{ .Values.mariadb.primary.service.name }}-{{ .Values.mariadb.primary.service.port.name }}.{{ .Release.Namespace }}.svc.cluster.local"
+            - name: SCEAU_BASE_NAME
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.secret.name }}
-                  key: POSTGRES_DB
-            - name: POSTGRES_USER
+                  key: MARIADB_DATABASE
+            - name: SCEAU_BASE_USER
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.secret.name }}
-                  key: POSTGRES_USER
-            - name: POSTGRES_PASSWORD
+                  key: MARIADB_USER
+            - name: SCEAU_BASE_PASS
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.secret.name }}
-                  key: POSTGRES_PASSWORD
+                  key: MARIADB_PASSWORD
             {{- range .Values.env }}
             - name: {{ .name }}
               value: {{ .value | quote }}
@@ -84,6 +131,26 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           terminationMessagePolicy: FallbackToLogsOnError
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          volumeMounts:
+            - name: php-socket
+              mountPath: /var/run/php
+            - name: app
+              mountPath: /src
+          command: ["/bin/sh","-lc"]
+          args:
+            - |
+              set -euo pipefail
+              if [ -f /etc/php-fpm.d/www.conf ]; then
+                sed -i 's|^listen = .*|listen = /var/run/php/php-fpm.sock|' /etc/php-fpm.d/www.conf
+                sed -i 's|^listen\.owner = .*|listen.owner = 1001|' /etc/php-fpm.d/www.conf
+                sed -i 's|^listen\.group = .*|listen.group = 1001|' /etc/php-fpm.d/www.conf
+              elif [ -f /usr/local/etc/php-fpm.d/www.conf ]; then
+                sed -i 's|^listen = .*|listen = /var/run/php/php-fpm.sock|' /usr/local/etc/php-fpm.d/www.conf
+                sed -i 's|^listen\.owner = .*|listen.owner = 1001|' /usr/local/etc/php-fpm.d/www.conf
+                sed -i 's|^listen\.group = .*|listen.group = 1001|' /usr/local/etc/php-fpm.d/www.conf
+              fi
+              echo "<?php phpinfo(); ?>" > /src/phpinfo.php
+              exec php-fpm -F
       restartPolicy: Always
       securityContext: {}
   strategy:
