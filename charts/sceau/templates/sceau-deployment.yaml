@@ -87,7 +87,7 @@ spec:
             - name: SCEAU_DATE
               value: "01/01/1970"
             - name: SCEAU_HOST
-              value: "{{ .Values.mariadb.primary.service.name }}-{{ .Values.mariadb.primary.service.port.name }}.{{ .Values.namespace }}.svc.cluster.local"
+              value: "{{ .Values.mariadb.primary.service.name }}-{{ .Values.mariadb.primary.service.ports.mysql }}.{{ .Values.namespace }}.svc.cluster.local"
             - name: SCEAU_BASE_NAME
               valueFrom:
                 secretKeyRef:

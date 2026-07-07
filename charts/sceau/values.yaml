@@ -118,6 +118,10 @@ mariadb:
     enabled: false
   primary:
     name: mariadb
+    service:
+      type: ClusterIP
+      ports:
+        mysql: 3306
     persistence:
       enabled: true
       storageClass: "standard"
