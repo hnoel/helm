@@ -85,29 +85,19 @@ tolerations: []
 affinity: {}
 
 env:
-  - name: POSTGRES_HOST
-    value: 'primary'
-  - name: POSTGRES_PORT
-    value: '5432'
-  - name: SITE_NAME
-    value: 'Sites Conformes'
-  - name: CONTAINER_PORT
-    value: 8000
-  - name: ALLOWED_HOSTS
-    value: '0.0.0.0,127.0.0.1'
-  - name: SECRET_KEY
+  - name: MARIADB_DATABASE:
     value: 'change_me'
-  - name: HOST_URL
-    value: '0.0.0.0'
-  - name: DATABASE_URL
-    value: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}"
-
+  - name: MARIADB_USER:
+    value: 'change_me'
+  - name: MARIADB_PASSWORD:
+    value: 'change_me'
+  - name: MARIADB_ROOT_PASSWORD:
+    value: 'change_me'
 
 secret:
   name: sceau.secrets
 
-# Dependencies override
-postgresql:
+mariadb:
   #global:
   #  security:
   #    allowInsecureImages: true
@@ -117,9 +107,21 @@ postgresql:
     repository: bitnami/mariadb
     tag: "latest"
     pullPolicy: IfNotPresent
-  auth:
-    enablePostgresUser: true
   architecture: standalone
+  auth:
+    database: appdb
+    username: appuser
+    password: change-me
+    rootPassword: change-me-root
+  initdbScripts: {}
+  tde:
+    enabled: false
+  primary:
+    name: mariadb
+    persistence:
+      enabled: true
+      storageClass: "standard"
+      size: 1Gi
   resources:
     limits:
       cpu: "1"
@@ -127,13 +129,4 @@ postgresql:
     requests:
       cpu: 250m
       memory: 256Mi
-  service:
-    enabled: true
-    type: ClusterIP
-    ports: 
-      postgresql: 5432
-  persistence:
-    enabled: true
-    storageClass: "standard"
-    size: 1Gi
 ...
