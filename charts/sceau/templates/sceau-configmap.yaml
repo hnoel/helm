@@ -9,9 +9,9 @@ data:
     LoadModule proxy_module modules/mod_proxy.so
     LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so
 
-    DocumentRoot "/src"
+    DocumentRoot "/var/www/html"
 
-    <Directory "/src">
+    <Directory "/var/www/html">
       Options FollowSymLinks
       AllowOverride All
       Require all granted
@@ -27,4 +27,10 @@ data:
     ; Minimal override to force TCP listener on localhost only
     ; (keeps php-fpm running and limits exposure to the pod)
     listen = 127.0.0.1:9000
+    ; Configuration for the default pool
+    [www]
+    ; Process manager
+    pm = static
+    ; Maximum number of child processes
+    pm.max_children = 4444
 ...

@@ -29,7 +29,7 @@ spec:
 
       containers:
         - name: httpd
-          image: registry.access.redhat.com/hi/httpd:latest-builder
+          image: registry.access.redhat.com/hi/httpd:latest
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
