@@ -29,39 +29,17 @@ spec:
 
       containers:
         - name: httpd
-          image: registry.access.redhat.com/hi/httpd:latest
+          image: registry.access.redhat.com/hi/httpd:latest-builder
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
               containerPort: {{ .Values.service.intHttpPort }}
               protocol: TCP
 
-          command: ["/bin/sh","-lc"]
-          args:
-            - |
-              set -euo pipefail
-
-              mkdir -p /etc/httpd/conf.d
-              cat > /etc/httpd/conf.d/zzz-php-fpm.conf <<'EOF'
-              LoadModule proxy_module modules/mod_proxy.so
-              LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so
-
-              DocumentRoot "/src"
-
-              <Directory "/src">
-                Options FollowSymLinks
-                AllowOverride All
-                Require all granted
-              </Directory>
-
-              DirectoryIndex index.php index.html
-
-              <FilesMatch "\.php$">
-                SetHandler "proxy:fcgi://127.0.0.1:9000"
-              </FilesMatch>
-              EOF
-
-              exec /usr/sbin/httpd -DFOREGROUND
+          volumeMounts:
+            - name: httpd-conf
+              mountPath: /etc/httpd/conf.d/zzz-php-fpm.conf
+              subPath: zzz-php-fpm.conf
 
           resources:
             {{- toYaml .Values.httpd.resources | nindent 12 | default "" }}
@@ -90,19 +68,10 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
 
-          command: ["/bin/sh","-lc"]
-          args:
-            - |
-              set -euo pipefail
-
-              # Switch php-fpm to TCP on localhost only (within this Pod)
-              if [ -f /etc/php-fpm.d/www.conf ]; then
-                sed -i 's|^listen = .*|listen = 127.0.0.1:9000|' /etc/php-fpm.d/www.conf
-              elif [ -f /usr/local/etc/php-fpm.d/www.conf ]; then
-                sed -i 's|^listen = .*|listen = 127.0.0.1:9000|' /usr/local/etc/php-fpm.d/www.conf
-              fi
-
-              exec /usr/sbin/php-fpm -F
+          volumeMounts:
+            - name: php-fpm-conf
+              mountPath: /etc/php-fpm.d/www.conf
+              subPath: www.conf
 
           env:
             - name: SCEAU_TYPE_BD
@@ -139,6 +108,14 @@ spec:
 
           resources:
             {{- toYaml .Values.resources | nindent 12 | default "" }}
+
+  volumes:
+    - name: httpd-conf
+      configMap:
+      name: {{ include "sceau.fullname" . }}-config
+    - name: php-fpm-conf
+      configMap:
+      name: {{ include "sceau.fullname" . }}-config
 
   strategy:
     type: RollingUpdate

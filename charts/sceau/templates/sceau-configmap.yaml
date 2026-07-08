@@ -1,0 +1,30 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "sceau.fullname" . }}-config
+  namespace: {{ .Values.namespace }}
+data:
+  zzz-php-fpm.conf: |
+    LoadModule proxy_module modules/mod_proxy.so
+    LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so
+
+    DocumentRoot "/src"
+
+    <Directory "/src">
+      Options FollowSymLinks
+      AllowOverride All
+      Require all granted
+    </Directory>
+
+    DirectoryIndex index.php index.html
+
+    <FilesMatch "\.php$">
+      SetHandler "proxy:fcgi://127.0.0.1:9000"
+    </FilesMatch>
+
+  www.conf: |
+    ; Minimal override to force TCP listener on localhost only
+    ; (keeps php-fpm running and limits exposure to the pod)
+    listen = 127.0.0.1:9000
+...
