@@ -19,7 +19,15 @@
 
     "imagePullSecrets": {
       "type": "array",
-      "items": { "type": "object", "properties": { "name": { "type": "string" } }, "required": ["name"] }
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "default": "my-registry" }
+        },
+        "required": ["name"],
+        "additionalProperties": false
+      },
+      "default": [{ "name": "my-registry" }]
     },
 
     "nameOverride": { "type": "string", "default": "" },
@@ -36,15 +44,15 @@
     },
 
     "podAnnotations": { "type": "object", "additionalProperties": { "type": "string" }, "default": {} },
-    "podSecurityContext": { "type": "object", "default": {} },
-    "securityContext": { "type": "object", "default": {} },
+    "podSecurityContext": { "type": "object", "default": {}, "additionalProperties": true },
+    "securityContext": { "type": "object", "default": {}, "additionalProperties": true },
 
     "service": {
       "type": "object",
       "properties": {
         "type": { "type": "string", "default": "ClusterIP" },
-        "extHttpPort": { "type": "integer", "default": 80, "minimum": 1, "maximum": 65535 },
-        "intHttpPort": { "type": "integer", "default": 8080, "minimum": 1, "maximum": 65535 }
+        "extHttpPort": { "type": "integer", "minimum": 1, "maximum": 65535, "default": 80 },
+        "intHttpPort": { "type": "integer", "minimum": 1, "maximum": 65535, "default": 8080 }
       },
       "additionalProperties": false
     },
@@ -67,7 +75,7 @@
       "additionalProperties": false
     },
 
-    "resources": { "type": "object", "default": {} },
+    "resources": { "type": "object", "default": {}, "additionalProperties": true },
 
     "route": {
       "type": "object",
@@ -75,7 +83,7 @@
         "enabled": { "type": "boolean", "default": true },
         "host": { "type": "string", "default": "example.com" },
         "tls": { "type": "boolean", "default": true },
-        "resources": { "type": "object", "default": {} }
+        "resources": { "type": "object", "default": {}, "additionalProperties": true }
       },
       "additionalProperties": false
     },
@@ -84,16 +92,16 @@
       "type": "object",
       "properties": {
         "enabled": { "type": "boolean", "default": false },
-        "minReplicas": { "type": "integer", "default": 1, "minimum": 1 },
-        "maxReplicas": { "type": "integer", "default": 100, "minimum": 1 },
-        "targetCPUUtilizationPercentage": { "type": "integer", "default": 80, "minimum": 1, "maximum": 100 }
+        "minReplicas": { "type": "integer", "minimum": 1, "default": 1 },
+        "maxReplicas": { "type": "integer", "minimum": 1, "default": 100 },
+        "targetCPUUtilizationPercentage": { "type": "integer", "minimum": 1, "maximum": 100, "default": 80 }
       },
       "additionalProperties": false
     },
 
     "nodeSelector": { "type": "object", "additionalProperties": { "type": "string" }, "default": {} },
     "tolerations": { "type": "array", "items": { "type": "object" }, "default": [] },
-    "affinity": { "type": "object", "default": {} },
+    "affinity": { "type": "object", "default": {}, "additionalProperties": true },
 
     "env": {
       "type": "array",
@@ -117,99 +125,13 @@
     "secret": {
       "type": "object",
       "properties": {
-        "name": { "type": "string", "default": "scean.secrets" }
+        "name": { "type": "string", "default": "sceau.secrets" }
       },
       "additionalProperties": false
     },
 
     "mariadb": {
       "type": "object",
-      "properties": {
-        "replicaCount": { "type": "integer", "default": 1, "minimum": 1 },
-        "image": {
-          "type": "object",
-          "properties": {
-            "registry": { "type": "string", "default": "docker.io" },
-            "repository": { "type": "string", "default": "bitnami/mariadb" },
-            "tag": { "type": "string", "default": "latest" },
-            "pullPolicy": { "type": "string", "default": "IfNotPresent" }
-          },
-          "additionalProperties": false
-        },
-        "architecture": { "type": "string", "default": "standalone" },
-
-        "auth": {
-          "type": "object",
-          "properties": {
-            "database": { "type": "string", "default": "appdb" },
-            "username": { "type": "string", "default": "appuser" },
-            "password": { "type": "string", "default": "change-me" },
-            "rootPassword": { "type": "string", "default": "change-me-root" },
-            "initdbScripts": { "type": "object", "default": {} }
-          },
-          "additionalProperties": false
-        },
-
-        "tde": {
-          "type": "object",
-          "properties": { "enabled": { "type": "boolean", "default": false } },
-          "additionalProperties": false
-        },
-
-        "primary": {
-          "type": "object",
-          "properties": {
-            "name": { "type": "string", "default": "mariadb" }
-          },
-          "additionalProperties": false
-        },
-
-        "service": {
-          "type": "object",
-          "properties": {
-            "type": { "type": "string", "default": "ClusterIP" },
-            "ports": {
-              "type": "object",
-              "properties": { "mysql": { "type": "integer", "default": 3306, "minimum": 1, "maximum": 65535 } },
-              "additionalProperties": false
-            }
-          },
-          "additionalProperties": false
-        },
-
-        "persistence": {
-          "type": "object",
-          "properties": {
-            "enabled": { "type": "boolean", "default": true },
-            "storageClass": { "type": "string", "default": "standard" },
-            "size": { "type": "string", "default": "1Gi" }
-          },
-          "additionalProperties": false
-        },
-
-        "resources": {
-          "type": "object",
-          "properties": {
-            "limits": {
-              "type": "object",
-              "properties": {
-                "cpu": { "type": "string", "default": "1" },
-                "memory": { "type": "string", "default": "1Gi" }
-              },
-              "additionalProperties": true
-            },
-            "requests": {
-              "type": "object",
-              "properties": {
-                "cpu": { "type": "string", "default": "250m" },
-                "memory": { "type": "string", "default": "256Mi" }
-              },
-              "additionalProperties": true
-            }
-          },
-          "additionalProperties": true
-        }
-      },
       "additionalProperties": true
     }
   },
