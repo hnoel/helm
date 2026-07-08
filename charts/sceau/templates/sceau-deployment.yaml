@@ -112,10 +112,10 @@ spec:
       volumes:
         - name: httpd-conf
           configMap:
-          name: {{ include "sceau.fullname" . }}-config
+            name: {{ include "sceau.fullname" . }}-config
         - name: php-fpm-conf
           configMap:
-          name: {{ include "sceau.fullname" . }}-config
+            name: {{ include "sceau.fullname" . }}-config
 
   strategy:
     type: RollingUpdate
