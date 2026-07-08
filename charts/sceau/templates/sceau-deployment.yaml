@@ -109,13 +109,13 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 | default "" }}
 
-  volumes:
-    - name: httpd-conf
-      configMap:
-      name: {{ include "sceau.fullname" . }}-config
-    - name: php-fpm-conf
-      configMap:
-      name: {{ include "sceau.fullname" . }}-config
+      volumes:
+        - name: httpd-conf
+          configMap:
+          name: {{ include "sceau.fullname" . }}-config
+        - name: php-fpm-conf
+          configMap:
+          name: {{ include "sceau.fullname" . }}-config
 
   strategy:
     type: RollingUpdate
