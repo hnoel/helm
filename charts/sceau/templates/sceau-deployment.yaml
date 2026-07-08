@@ -119,7 +119,7 @@ spec:
               value: {{ .value | quote }}
             {{- end }}
 
-            {{- with .Values.secret
+            {{- with .Values.secret }}
             - name: SCEAU_BASE_NAME
               valueFrom:
                 secretKeyRef:
