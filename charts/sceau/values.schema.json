@@ -72,7 +72,7 @@
       "properties": {
         "pullPolicy": { "type": "string", "default": "IfNotPresent" }
       },
-      "additionalProperties": false
+      "additionalProperties": true
     },
 
     "resources": { "type": "object", "default": {}, "additionalProperties": true },
