@@ -47,7 +47,10 @@ sceau:
   date: "01/01/1970"
 # Used by the template for the httpd container-specific settings
 httpd:
-  pullPolicy: IfNotPresent
+  image:
+    repository: ghcr.io/hnoel/sceau
+    tag: "latest-frontend"
+    pullPolicy: IfNotPresent
   resources: {}
 
 route:

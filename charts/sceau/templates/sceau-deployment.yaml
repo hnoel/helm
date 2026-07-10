@@ -29,8 +29,8 @@ spec:
 
       containers:
         - name: httpd
-          image: registry.access.redhat.com/hi/httpd:latest
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ .Values.httpd.image.repository }}:{{ .Values.httpd.image.tag }}"
+          imagePullPolicy: {{ .Values.httpd.image.pullPolicy }}
           ports:
             - name: http
               containerPort: {{ .Values.service.intHttpPort }}
@@ -40,6 +40,11 @@ spec:
             - name: httpd-conf
               mountPath: /etc/httpd/conf.d/zzz-php-fpm.conf
               subPath: zzz-php-fpm.conf
+
+          env:
+            - name: TZ
+              value: "Europe/Paris"
+            - name: SCEAU_BASE_DIR
 
           resources:
             {{- toYaml .Values.httpd.resources | nindent 12 | default "" }}
@@ -74,12 +79,16 @@ spec:
               subPath: www.conf
 
           env:
+            - name: TZ
+              value: "Europe/Paris"
+            - name: SCEAU_BASE_DIR
+              value: "/src"
             - name: SCEAU_TYPE_BD
               value: "mysql"
             - name: SCEAU_VERSION
               value: "debug"
             - name: SCEAU_DATE
-              value: "01/01/1970"
+              value: "01 juillet 2026"
             - name: SCEAU_HOST
               value: "{{ .Values.mariadb.primary.service.name }}-{{ .Values.mariadb.primary.service.ports.mysql }}.{{ .Values.namespace }}.svc.cluster.local"
 

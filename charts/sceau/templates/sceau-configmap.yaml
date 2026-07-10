@@ -19,18 +19,33 @@ data:
 
     DirectoryIndex index.php index.html
 
-    <FilesMatch "\.php$">
-      SetHandler "proxy:fcgi://127.0.0.1:9000"
+    ProxyPassMatch "^/(.*\.php)$" "fcgi://php-fpm.{{ .Values.namespace }}:9000/src/$1"
+    <FilesMatch "\.php$|status|ping|pong">
+      SetHandler "proxy:fcgi://php-fpm.{{ .Values.namespace }}.svc.cluster.local:9000"
     </FilesMatch>
-
   www.conf: |
-    ; Minimal override to force TCP listener on localhost only
-    ; (keeps php-fpm running and limits exposure to the pod)
-    listen = 127.0.0.1:9000
     ; Configuration for the default pool
     [www]
+    user = apache
+    group = apache
+    ; Minimal override to force TCP listener on localhost only
+    ; (keeps php-fpm running and limits exposure to the pod)
+    listen = 0.0.0.0:9000
+    listen.acl_users = apache,nginx
     ; Process manager
-    pm = static
+    pm = dynamic
     ; Maximum number of child processes
-    pm.max_children = 4444
+    pm.max_children = 50
+    pm.start_servers = 5
+    pm.min_spare_servers = 5
+    pm.max_spare_servers = 35
+    pm.status_path = /status
+    ping.path = /ping
+    ping.response = pong
+    slowlog = /var/log/php-fpm/www-slow.log
+    security.limit_extensions = .php .js .css .ico .gif .png
+    php_admin_value[error_log] = /var/log/php-fpm/www-error.log
+    php_admin_flag[log_errors] = on
+    php_value[session.save_handler] = files
+    php_value[session.save_path]    = /var/lib/php/session
 ...
