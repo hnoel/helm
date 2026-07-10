@@ -8,7 +8,7 @@ name: sceau
 image:
   repository: ghcr.io/hnoel/sceau
   tag: "main"
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 imagePullSecrets:
   - name: my-registry
@@ -50,7 +50,7 @@ httpd:
   image:
     repository: ghcr.io/hnoel/sceau
     tag: "latest-frontend"
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
   resources: {}
 
 route:
