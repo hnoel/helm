@@ -1,10 +1,14 @@
 ---
 kind: Service
 apiVersion: v1
+apiVersion: apps/v1
 metadata:
-  name: {{ .Release.Name }}-{{ .Chart.Name }}
+  name: {{ include "sceau.fullname" . }}
+  namespace: {{ .Values.namespace }}
   labels:
-    app: {{ .Chart.Name }}
+    app.kubernetes.io/name: {{ include "sceau.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    helm.sh/chart: {{ include "sceau.chart" . }}
 spec:
   type: {{ .Values.service.type }}
   ports:

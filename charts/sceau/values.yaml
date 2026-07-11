@@ -37,7 +37,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  extHttpPort: 80
+  extHttpPort: 8080
   intHttpPort: 8080
 
 # Used by the container env vars SCEAU_VERSION/SCEAU_DATE in the template

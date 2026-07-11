@@ -1,0 +1,24 @@
+---
+{{- if .Values.route.enabled }}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  apiVersion: apps/v1
+metadata:
+  name: {{ include "sceau.fullname" . }}
+  namespace: {{ .Values.namespace }}
+spec:
+  host: {{ .Values.route.host }}
+  to:
+    kind: Service
+    name: {{ .Release.Name }}-{{ .Chart.Name }}
+  port:
+    targetPort: http
+  {{- if .Values.route.tls }}
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+    insecureSkipVerification: false
+  {{- end }}
+{{- end }}
+...
