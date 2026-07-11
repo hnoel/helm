@@ -4,11 +4,8 @@ apiVersion: v1
 apiVersion: apps/v1
 metadata:
   name: {{ include "sceau.fullname" . }}
-  namespace: {{ .Values.namespace }}
   labels:
     app.kubernetes.io/name: {{ include "sceau.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    helm.sh/chart: {{ include "sceau.chart" . }}
 spec:
   type: {{ .Values.service.type }}
   ports:

@@ -6,7 +6,6 @@ metadata:
   apiVersion: apps/v1
 metadata:
   name: {{ include "sceau.fullname" . }}
-  namespace: {{ .Values.namespace }}
 spec:
   host: {{ .Values.route.host }}
   to:
@@ -17,7 +16,6 @@ spec:
   {{- if .Values.route.tls }}
   tls:
     termination: edge
-    insecureEdgeTerminationPolicy: Redirect
     insecureSkipVerification: false
   {{- end }}
 {{- end }}
