@@ -144,7 +144,7 @@
     },
 
     "mariadb": {
-      "$ref": "https://github.com/bitnami/charts/blob/main/bitnami/mariadb/values.schema.json."
+      "$ref": "https://raw.githubusercontent.com/bitnami/charts/refs/heads/main/bitnami/mariadb/values.schema.json"
     }
   },
   "additionalProperties": true
