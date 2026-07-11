@@ -11,7 +11,7 @@ spec:
   host: {{ .Values.route.host }}
   to:
     kind: Service
-    name: {{ .Release.Name }}-{{ .Chart.Name }}
+    name: {{ include "sceau.fullname" . }}
   port:
     targetPort: http
   {{- if .Values.route.tls }}
