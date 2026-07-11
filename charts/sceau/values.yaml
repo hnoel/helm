@@ -37,8 +37,8 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  extHttpPort: 8080
-  intHttpPort: 8080
+  extHttpPort: 8088
+  intHttpPort: "httpd-svc-port"
 
 # Used by the container env vars SCEAU_VERSION/SCEAU_DATE in the template
 sceau:
@@ -55,7 +55,7 @@ httpd:
 
 route:
   enabled: true
-  host: example.com # à surcharger en prod
+  host: '' #example.com # à surcharger en prod
   tls: true
 
 resources:

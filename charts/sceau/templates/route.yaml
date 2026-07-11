@@ -3,9 +3,12 @@
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  apiVersion: apps/v1
-metadata:
   name: {{ include "sceau.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app.kubernetes.io/name: {{ include "sceau.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    helm.sh/chart: {{ include "sceau.chart" . }}
 spec:
   host: {{ .Values.route.host }}
   to:
@@ -15,8 +18,8 @@ spec:
     targetPort: http
   {{- if .Values.route.tls }}
   tls:
-    termination: edge
-    insecureSkipVerification: false
+    termination: 'edge'
+    insecureEdgeTerminationPolicy: 'Redirect'
   {{- end }}
 {{- end }}
 ...

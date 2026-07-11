@@ -1,9 +1,12 @@
 ---
-apiVersion: v1
+apiVersion: "v1"
 kind: ConfigMap
 metadata:
-  name: {{ include "sceau.fullname" . }}-config
+  name: {{ include "sceau.fullname" . }}
   namespace: {{ .Values.namespace }}
+  labels:
+    app.kubernetes.io/name: {{ include "sceau.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
 data:
   zzz-php-fpm.conf: |
     LoadModule proxy_module modules/mod_proxy.so
@@ -19,9 +22,9 @@ data:
 
     DirectoryIndex index.php index.html
 
-    ProxyPassMatch "^/(.*\.php)$" "fcgi://php-fpm.{{ .Values.namespace }}:9000/src/$1"
+    ProxyPassMatch "^/(.*\.php)$" "fcgi://php.hnoel-dev.svc.cluster.local/src/$1"
     <FilesMatch "\.php$|status|ping|pong">
-      SetHandler "proxy:fcgi://php-fpm.{{ .Values.namespace }}.svc.cluster.local:9000"
+      SetHandler "proxy:fcgi://php.hnoel-dev.svc.cluster.local"
     </FilesMatch>
   www.conf: |
     ; Configuration for the default pool

@@ -32,8 +32,8 @@ spec:
           image: "{{ .Values.httpd.image.repository }}:{{ .Values.httpd.image.tag }}"
           imagePullPolicy: {{ .Values.httpd.image.pullPolicy }}
           ports:
-            - name: http
-              containerPort: {{ .Values.service.intHttpPort }}
+            - name: "{{ .Values.service.intHttpPort }}"
+              containerPort: 8080
               protocol: TCP
 
           volumeMounts:
@@ -121,10 +121,10 @@ spec:
       volumes:
         - name: httpd-conf
           configMap:
-            name: {{ include "sceau.fullname" . }}-config
+            name: {{ include "sceau.fullname" . }}
         - name: php-fpm-conf
           configMap:
-            name: {{ include "sceau.fullname" . }}-config
+            name: {{ include "sceau.fullname" . }}
 
   strategy:
     type: RollingUpdate
