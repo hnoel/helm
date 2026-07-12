@@ -18,7 +18,7 @@ spec:
     - name: php
       protocol: TCP
       port: 9000
-      targetPort: "php"
+      targetPort:  "{{ .Values.service.intPhpPort }}"
   sessionAffinity: None
   ipFamilies:
     - "IPv4"

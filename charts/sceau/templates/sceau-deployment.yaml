@@ -73,6 +73,11 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
 
+          ports:
+            - name: "{{ .Values.service.intPhpPort }}"
+              containerPort: 9000
+              protocol: TCP
+
           volumeMounts:
             - name: php-fpm-conf
               mountPath: /etc/php-fpm.d/www.conf
@@ -90,7 +95,7 @@ spec:
             - name: SCEAU_DATE
               value: "01 juillet 2026"
             - name: SCEAU_HOST
-              value: "{{ .Values.mariadb.primary.service.name }}-{{ .Values.mariadb.primary.service.ports.mysql }}.{{ .Values.namespace }}.svc.cluster.local"
+              value: "{{ .Release.Name }}-{{ .Values.mariadb.primary.name }}.{{ .Values.namespace }}.svc.cluster.local:{{ .Values.mariadb.primary.service.ports.mysql }}"
 
             {{- range .Values.env }}
             - name: {{ .name }}
@@ -112,7 +117,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ .name }}
-                  key: MARIADB_PASSWORD
+                  key: mariadb-password
             {{- end }}
 
           resources:

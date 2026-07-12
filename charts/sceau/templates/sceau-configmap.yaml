@@ -22,9 +22,10 @@ data:
 
     DirectoryIndex index.php index.html
 
-    ProxyPassMatch "^/(.*\.php)$" "fcgi://php.hnoel-dev.svc.cluster.local/src/$1"
+    
+    ProxyPassMatch "^/(.*\.php)$" "fcgi://sceau-sceau.{{ .Values.namespace }}.svc.cluster.local:9000/src/$1"
     <FilesMatch "\.php$|status|ping|pong">
-      SetHandler "proxy:fcgi://php.hnoel-dev.svc.cluster.local"
+      SetHandler "proxy:fcgi://sceau-sceau.{{ .Values.namespace }}.svc.cluster.local:9000"
     </FilesMatch>
   www.conf: |
     ; Configuration for the default pool

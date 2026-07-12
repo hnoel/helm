@@ -39,6 +39,7 @@ service:
   type: ClusterIP
   extHttpPort: 8088
   intHttpPort: "httpd-svc-port"
+  intPhpPort: "php-svc-port"
 
 # Used by the container env vars SCEAU_VERSION/SCEAU_DATE in the template
 sceau:
@@ -79,15 +80,15 @@ tolerations: []
 
 affinity: {}
 
-env:
-  - name: MARIADB_DATABASE
-    value: 'change_me'
-  - name: MARIADB_USER
-    value: 'change_me'
-  - name: MARIADB_PASSWORD
-    value: 'change_me'
-  - name: MARIADB_ROOT_PASSWORD
-    value: 'change_me'
+# env:
+#   - name: MARIADB_DATABASE
+#     value: 'change_me'
+#   - name: MARIADB_USER
+#     value: 'change_me'
+#   - name: MARIADB_PASSWORD
+#     value: 'change_me'
+#   - name: MARIADB_ROOT_PASSWORD
+#     value: 'change_me'
 
 secret:
   name: sceau.secrets
@@ -104,10 +105,11 @@ mariadb:
     pullPolicy: IfNotPresent
   architecture: standalone
   auth:
+    existingSecret: sceau.secrets
     database: appdb
     username: appuser
-    password: change-me
-    rootPassword: change-me-root
+    # password: change-me
+    # rootPassword: change-me-root
   initdbScripts: {}
   tde:
     enabled: false
@@ -118,13 +120,12 @@ mariadb:
       ports:
         mysql: 3306
     persistence:
-      enabled: true
-      storageClass: "standard"
+      enabled: false
       size: 1Gi
   resources:
     limits:
       cpu: "1"
-      memory: 1Gi
+      memory: 4Gi
     requests:
       cpu: 250m
       memory: 256Mi
