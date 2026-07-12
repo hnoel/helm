@@ -129,4 +129,5 @@ mariadb:
     requests:
       cpu: 250m
       memory: 256Mi
+  initdbScriptsConfigMap: "db-config"
 ...
