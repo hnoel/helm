@@ -24,7 +24,7 @@
       "type": "array",
       "items": {
         "type": "object",
-	"description": "Registry secret names as an array",
+        "description": "Registry secret names as an array",
         "properties": {
           "name": { "type": "string", "default": "my-registry" }
         },
@@ -139,7 +139,8 @@
     },
 
     "mariadb": {
-      "$ref": "file://bitnami.mariadb.values.schema.json"
+      "type": "object",
+      "$ref": "file:bitnami.mariadb.values.schema.json"
     }
   },
   "additionalProperties": true
