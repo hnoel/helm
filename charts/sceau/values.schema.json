@@ -139,8 +139,14 @@
     },
 
     "mariadb": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "$id": "https://github.com/bitnami/charts/blob/main/bitnami/mariadb/values.schema.json",
+      "title": "Chart Values",
+      "description": "Bitnami mariadb chart values",
       "type": "object",
-      "$ref": "file:bitnami.mariadb.values.schema.json"
+      "properties": {
+        "name": { "$ref": "bitnami.mariadb.values.schema.json"}
+      }
     }
   },
   "additionalProperties": true
