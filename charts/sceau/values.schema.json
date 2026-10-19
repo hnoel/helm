@@ -140,12 +140,12 @@
 
     "mariadb": {
       "$schema": "http://json-schema.org/draft-07/schema#",
-      "$id": "https://github.com/bitnami/charts/blob/main/bitnami/mariadb/values.schema.json",
+      "$id": "https://github.com/bitnami/charts/blob/main/bitnami/mariadb/values.schema.json?raw=true",
       "title": "Chart Values",
       "description": "Bitnami mariadb chart values",
       "type": "object",
       "properties": {
-        "name": { "$ref": "bitnami.mariadb.values.schema.json"}
+        "name": { "$ref": "values.schema.json"}
       }
     }
   },
