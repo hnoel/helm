@@ -139,7 +139,7 @@
     },
 
     "mariadb": {
-      "$ref": "https://raw.githubusercontent.com/bitnami/charts/refs/heads/main/bitnami/mariadb/values.schema.json"
+      "$ref": "file://bitnami.mariadb.values.schema.json"
     }
   },
   "additionalProperties": true
